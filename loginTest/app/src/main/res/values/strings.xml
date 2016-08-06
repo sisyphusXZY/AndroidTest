@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">loginTest</string>
+    <string name="input_username">usermane</string>
+    <string name="input_password">password</string>
+    <string name="login">Login</string>
+    <string name="save_password">Save Password</string>
+</resources>
