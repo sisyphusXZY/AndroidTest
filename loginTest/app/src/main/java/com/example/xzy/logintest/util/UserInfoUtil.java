@@ -1,6 +1,7 @@
 package com.example.xzy.logintest.util;
 
 import android.content.Context;
+import android.os.Environment;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,8 +22,9 @@ public class UserInfoUtil {
         try {
             String userInfo = username + "##" + password;//packaging
 //            String path = "/data/data/com.example.xzy.logintest";
-            String path = context.getFilesDir().getPath();
-
+//            String path = context.getFilesDir().getPath();
+//            String path = "/mnt/sdcard";
+            String path = Environment.getExternalStorageDirectory().getPath();
             File file =  new File(path, "userInfo.txt");
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             fileOutputStream.write(userInfo.getBytes());
@@ -40,7 +42,8 @@ public class UserInfoUtil {
     public static Map<String, String> getUserInfo(Context context){
         try{
 //            String path = "/data/data/com.example.xzy.logintest";
-            String path = context.getFilesDir().getPath();
+//            String path = context.getFilesDir().getPath();
+            String path = Environment.getExternalStorageDirectory().getPath();
 
             File file =  new File(path, "userInfo.txt");
             FileInputStream fileInputStream = new FileInputStream(file);
