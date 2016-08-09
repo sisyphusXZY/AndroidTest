@@ -65,17 +65,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             //judge the sdcard usableSpace
-            File sdcard_fileDir = Environment.getExternalStorageDirectory();
-            long usableSpace = sdcard_fileDir.getUsableSpace();
+//            File sdcard_fileDir = Environment.getExternalStorageDirectory();
+//            long usableSpace = sdcard_fileDir.getUsableSpace();
 //            long totalSpace = sdcard_fileDir.getTotalSpace();
             //long to G String
-            String usableSpace_str = Formatter.formatFileSize(mContext, usableSpace);
+//            String usableSpace_str = Formatter.formatFileSize(mContext, usableSpace);
 //            String totalSpace_str = Formatter.formatFileSize(mContext, totalSpace);
 
-            if(usableSpace < 1024 * 1024 * 100){
-                Toast.makeText(mContext, "sdcard have no usableSpace" + usableSpace_str, Toast.LENGTH_SHORT).show();
-                return;
-            }
+//            if(usableSpace < 1024 * 1024 * 100){
+//                Toast.makeText(mContext, "sdcard have no usableSpace" + usableSpace_str, Toast.LENGTH_SHORT).show();
+//                return;
+//            }
 
             boolean result = UserInfoUtil.saveUserInfo(mContext, username, password);
             if(result){

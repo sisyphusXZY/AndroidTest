@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MessageBackups_xmlTest</string>
+    <string name="message_restore">Message Restore</string>
+    <string name="message_backup">Message Backup</string>
+</resources>

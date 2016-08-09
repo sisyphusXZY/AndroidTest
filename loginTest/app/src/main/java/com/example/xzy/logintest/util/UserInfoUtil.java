@@ -1,7 +1,9 @@
 package com.example.xzy.logintest.util;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,19 +22,15 @@ public class UserInfoUtil {
     public static boolean saveUserInfo(Context context, String username, String password) {
         //save username and password
         try {
-            String userInfo = username + "##" + password;//packaging
-//            String path = "/data/data/com.example.xzy.logintest";
-//            String path = context.getFilesDir().getPath();
-//            String path = "/mnt/sdcard";
-            String path = Environment.getExternalStorageDirectory().getPath();
-            File file =  new File(path, "userInfo.txt");
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            fileOutputStream.write(userInfo.getBytes());
-            fileOutputStream.close();
+           //1.create a sharedpreferences object by context
+            SharedPreferences sharedpreferences = context.getSharedPreferences("userInfo", context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString("username", username);
+            editor.putString("password", password);
+            editor.commit();
+
             return true;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -41,21 +39,15 @@ public class UserInfoUtil {
 
     public static Map<String, String> getUserInfo(Context context){
         try{
-//            String path = "/data/data/com.example.xzy.logintest";
-//            String path = context.getFilesDir().getPath();
-            String path = Environment.getExternalStorageDirectory().getPath();
+            //another way to replace the below three step:
+//            SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences sharedPreferences = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+            String username = sharedPreferences.getString("username", "");
+            String password = sharedPreferences.getString("password", "");
 
-            File file =  new File(path, "userInfo.txt");
-            FileInputStream fileInputStream = new FileInputStream(file);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
-
-            String readLine = bufferedReader.readLine();
-            String[] split = readLine.split("##");
             HashMap<String, String> hashMap = new HashMap<String, String>();
-            hashMap.put("username", split[0]);
-            hashMap.put("password", split[1]);
-            bufferedReader.close();
-            fileInputStream.close();
+            hashMap.put("username", username);
+            hashMap.put("password", password);
             return hashMap;
         }catch (Exception e){
             e.printStackTrace();
