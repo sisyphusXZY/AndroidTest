@@ -33,12 +33,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(mContext, "successful", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(mContext, "false", Toast.LENGTH_SHORT).show();
-
                 }
-
                 break;
             case R.id.bt_restore:
-
+                int messageNum = SmsUtils.restoreSms_xmlSerializer(mContext);
+                if(messageNum != 0){
+                    Toast.makeText(mContext, "success " + messageNum, Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(mContext, "false", Toast.LENGTH_SHORT).show();
+                }
                 break;
             default:
 

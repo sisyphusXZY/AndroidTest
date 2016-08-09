@@ -3,6 +3,8 @@ package com.example.xzy.messagebackups_xmltest;
 import android.content.Context;
 import android.util.Xml;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.FileNotFoundException;
@@ -99,4 +101,49 @@ public class SmsUtils {
 
     }
 
+    public static int restoreSms_xmlSerializer(Context context) {
+        ArrayList<SmsBean> arrayList = null;
+        SmsBean smsBean = null;
+        try{
+           XmlPullParser xpp = Xml.newPullParser();
+           xpp.setInput(context.openFileInput("backupSms2.xml"),"utf-8");
+           int type = xpp.getEventType();
+           while(type != XmlPullParser.END_DOCUMENT){
+               String currentTagName = xpp.getName();
+               switch (type){
+                   case XmlPullParser.START_TAG:
+                       if(currentTagName.equals("Smss")){
+                           arrayList = new ArrayList<SmsBean>();
+                       }else if (currentTagName.equals("Sms")) {
+                       smsBean = new SmsBean();
+                       smsBean.id = Integer.parseInt(xpp.getAttributeValue(null, "id"));
+                   } else if (currentTagName.equals("num")) {
+                       smsBean.num = xpp.nextText();
+                   } else if (currentTagName.equals("msg")) {
+                       smsBean.msg = xpp.nextText();
+                   } else if (currentTagName.equals("date")) {
+                       smsBean.date = xpp.nextText();
+                   }
+                       break;
+                   case XmlPullParser.END_TAG:
+                       if (currentTagName.equals("Sms")) {
+                           arrayList.add(smsBean);
+                       }
+                       break;
+                   default:
+                       break;
+               }
+               type = xpp.next();
+           }
+            return arrayList.size();
+       }catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
 }
