@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">createdatabase</string>
+    <string name="add">add</string>
+    <string name="del">del</string>
+    <string name="update">update</string>
+    <string name="query">query</string>
+</resources>
